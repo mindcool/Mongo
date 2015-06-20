@@ -29,3 +29,26 @@ db.articles.find()
 
 * To see the document in a pretty format (will print out as formatted JSON)
 db.articles.find().pretty()
+
+# Creating a document and saving it to collection
+
+* Lets start by creating the document
+var articleInfo = {};
+
+*Populating our articleInfo document with different fields
+articleInfo.articleName = "MongoDB Introduction";
+articleInfo.authorName = "Noyan AYDIN";
+articleInfo.tags = ["database", "NoSQL", "DBA", "Dev"];
+articleInfo.metaData = {};
+articleInfo.metaData.authors = ["Noyan", "Mehmet"];
+articleInfo.metaData.description = "About MongoDB";
+articleInfo.metaData.created_on = new Date();
+
+*Save the document to the articles collection
+db.articles.save(articleInfo);
+
+* In MongoDB save and insert acts differently
+Save behaves differently if it is passed with an "_id" parameter.
+If the document contains an _id field, then the save() method performs an upsert querying the collection on the _id field:
+If a document does not exist with the specified _id value, the save() method performs an insert with the specified fields in the document.
+If a document exists with the specified _id value, the save() method performs an update, replacing all field in the existing record with the fields from the document.
