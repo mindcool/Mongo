@@ -1,0 +1,31 @@
+#Installation of Mongo DB With Brew package manager
+
+* Install MongoDB binaries
+brew install mongodb
+
+* To build from source files and include SSL
+brew install mongodb --with -openssl
+
+* To install the lates development release for use in testing and development
+brew install mongodb --devel
+
+#Creating the first database
+
+* For starting the mongoDB server
+mongod
+
+* For connecting to mongoDB server
+mongo
+
+* For creating a database (use is the command for creating the database)
+use database_name (this command modify db to point to the database)
+
+
+* For creating a collection under database and we used insert to insert data on that collection
+db.collection_name.insert({field:value, field:value})
+
+* For find all documents in a collection
+db.articles.find()
+
+* To see the document in a pretty format (will print out as formatted JSON)
+db.articles.find().pretty()
