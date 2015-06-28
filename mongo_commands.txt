@@ -52,3 +52,71 @@ Save behaves differently if it is passed with an "_id" parameter.
 If the document contains an _id field, then the save() method performs an upsert querying the collection on the _id field:
 If a document does not exist with the specified _id value, the save() method performs an insert with the specified fields in the document.
 If a document exists with the specified _id value, the save() method performs an update, replacing all field in the existing record with the fields from the document.
+
+#DROPPING THE DATABASE
+
+* We can use show command to see databases in our connected instance
+show dbs
+
+* After listing all the databases in our instance we should change database to the one we want to drop by using
+use database_name
+
+*For dropping the database we will use
+db.dropDatabase()
+
+#Creating a collection
+* For creating a collection we can use createCollection method
+use myblogs
+db.createCollection("name_of_the_collection")
+
+* For showing available collection
+show collections
+
+*We can also createCollection by passing a configuration object
+db.createCollection("blogs", {capped:true, autoIndexID:true, size:3679000, max:1000})
+While creating a collection by passing a option parameter every field has different meaning lets see them below
+capped: If the collection reached the size oldest record deleted by the server should be used with size
+size: Size given in bytes and shows the maximum size of collection
+max: This is about how much document we are able to put in a collection
+autoIndexID: Creates an index on _id field and it is default false
+
+#Creating/Inserting a document in collection using javascript file
+* I just created a javascript file named student_info.js to load object to our database
+load("path_of_the_file");
+
+#Inserting an array of documents into a collection
+* I just created studentsInfoArray.js file which contains an array and we will insert that
+load("path_of_the_file");
+
+#Querying a document in MongoDB
+*Until now, we used find method to return all the documents in the collection
+db.studentsInfoCollection.find().pretty();
+
+*If we want to get specific data from collection, we can use below query
+db.classInfo.find({"name.firstName":"Noyan"}).pretty();
+
+* We can also use $eq for writing query a little differently, below query find the age's where it is equal to 12
+db.studentsInfoCollection.find({"age":{$eq:12}})
+
+#$lt, $gt Query Operators
+* In last example we used $eq query operator. We can also use $lt and $gt operators as well
+db.studentInfoCollection.find({"age": {$lt:15}}).pretty();
+
+#Other Query Operators
+* In this part we are going to learn $gte, $lte,
+db.studentInfoCollection.find({"age":{$gte:16}}).pretty(); ($gte operator using for choosing records greater than the given value)
+db.studentInfoCollection.find({"age":{$lte:16}}).pretty(); ($lte is just using for choosing records less than the given value)
+
+* $in operator is just selecting documents with given array value
+db.studentInfoCollection.find({"lessons":{$in:["looking_array_value"]}}).pretty();
+
+* $nin operator just using for selecting document not containing the value inside the array
+db.studentInfoCollection.find({"lessons":{$in:["looking_array_value"]}}).pretty();
+
+* $exist operator is using for selecting documents with certain field
+db.studentInfoCollection.find({"lessons":{exists:true}}).pretty();
+
+
+
+
+ 
