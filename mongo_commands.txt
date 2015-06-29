@@ -116,7 +116,37 @@ db.studentInfoCollection.find({"lessons":{$in:["looking_array_value"]}}).pretty(
 * $exist operator is using for selecting documents with certain field
 db.studentInfoCollection.find({"lessons":{exists:true}}).pretty();
 
+#Updating Documents
+* db.collection_name.update({"name.firstName":"Noyan"}, {$set:{"age":17}})
+In the query above the first parameter is the criteria we use to choose the document we want to update and second parameter is the field which we want to update
+
+* db.collection_name.update({"name.firstName":"Noyan"}, {$set:{"age":37}}, {upsert:true})
+If upsert set to true, if our criteria do not return any result Mongo will create a new document
+
+Also we can update array elements
+* db.collection_name.update({"name.firstName":"Noyan"}, {$set:{"subjects.1":"Science"})
+
+#Deleting Documents
+* We got remove method for deleting documents
+db.collection_name.remove({"name.firstName": "Alun"})
+* We can also past one other parameter to remove specified number of records
+db.collection_name.remove({"name.firstName": "Alun"},1)
+* If we don't pass any argument into remove method it will remove all the documents in the collection
+db.collection_name.remove()
+
+#Performance Tuning in MongoDB with indexes
+* To understand the impact of indexes on performance we will use explain function.
+db.collection_name.find({"name":"Alun"}).explain()
+* Id field in MongoDB by default comes indexed, so the result of that query nscanned element will be 1
+db.collection_name.find({_id:ObjectId("5837434JD9389")}).explain()
+* To create an index we will use createIndex() function
+db.collection_name.createIndex({age:1})
+If we pass 1 to the createIndex command it will create ascending ordered index otherwise it would be descending ordered index
+* To see indexes binded to the collection we can use
+db.collection.getIndexes() which return all the fields with index in the collection
+* For dropping the index it is enough to write
+db.studentsInfoCollection.dropIndex({age:1});
 
 
 
- 
+
