@@ -147,6 +147,33 @@ db.collection.getIndexes() which return all the fields with index in the collect
 * For dropping the index it is enough to write
 db.studentsInfoCollection.dropIndex({age:1});
 
+#ObjectIDs In MongoDB
+* If we just insert a record to our MongoDB collection MongoDB server will create an ObjectId automatically for us
+db.productDetails.insert({"prdtName":"microphone"});
+* But if we just insert _id field manually, we can control the creation of ObjectId
+db.productDetails.insert({_id:001, "prdtName": "Television"});
+* To get the timestamp from ObjectId field
+db.productDetails.find()[0]._id.getTimestamp();
+
+#Aggregation framework in MongoDB
+* In RDBMS while we are using COUNT(*) and GROUP BY methods, MongoDB provides us aggregation framework and method
+
+* Inside aggregate method we can pass operation to be performed, so various methods we can use inside aggregate method are
+$sum just return the sum of all the fields
+
+$avg will give the avarage value of the salary
+
+$min and $max methods so we can get minimum and maximum values of that field
+
+$first we can get the first document or first record in a document
+
+$last which do the vice versa of what $first do
+
+* Now it is time to do some examples with aggregation framework
+
+* The steps we are going to follow for our first example are grouping the documents based on the author and getting the total number of blogposts by each author
+
+
 
 
 
