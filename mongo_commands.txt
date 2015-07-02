@@ -173,7 +173,89 @@ $last which do the vice versa of what $first do
 
 * The steps we are going to follow for our first example are grouping the documents based on the author and getting the total number of blogposts by each author
 
+# Relationships in MongoDB
 
+* In MongoDB for creating relationships we can use one of the two models embeding documents and referencing documents in this part I will make
+some hands on exercises about those two
 
+* So suppose we got two collection customer and address and want each customer to have only one address due to reason will create one-to-one
+relationship in which we can use embeding documents and referencing document strategies
 
+{
+	name: "Noyan AYDIN",
+	business: "IT Consulting",
+	address: {
+		street: "100S 50W",
+		city: "Istanbul",
+		county: "Bakirkoy"
+	}
+}
 
+The first example using embeded document strategy, the second example will use referencing for solving the one to one relationship problem
+
+Customer Document
+{
+	c_id: 001,
+	name: "Noyan AYDIN",
+	business: "IT Consolting"
+}
+
+Address Document
+
+{
+	c_id: 001,
+	street: "100S 50W",
+	city: "Istanbul",
+	county: "Bakirkoy"
+}
+
+* Lets take a look at one to many relationships right now, for that purpose we are going to use student and subjects relationships
+
+{
+	name: "Noyan AYDIN",
+	school: "Bilkent",
+	subjects: [{teacher:"Oktay Sinanoglu", subject:"Chemistry"}, {teacher:"Einstein", subject:"Theoric Physics"}]
+}
+
+If we choose to go with embeded strategy we can fetch all subjects related to the student with just a single query
+The query finding the related student can reach related subjects easily
+
+* If we go with reference strategy
+Student document
+{id: 101, name: "Noyan AYDIN", school:"Bilkent"}
+
+Subjects documents
+{
+	std_id: 101,
+	teacher: "Oktay Sinanoglu",
+	subject: "Chemistry"
+}
+
+{
+	std_id: 101,
+	teacher: "Nurican Isiaktir",
+	subject: "Theoric Physics"
+}
+
+* For achieving Many-to-Many relationships in MongoDB we can use two way embedding
+Author Document
+{
+	id: 001,
+	name:"Noyan AYDIN",
+	articles: [1,2]
+}
+
+Article Document:
+{
+	id: 001,
+	title: "Analytic Competition",
+	categories: ["CS","Analytic"],
+	authors:[1,3] //Containing authors array just for supporting many-to-many relationship
+}
+
+{
+	id:002,
+	title: "Querying MongoDB",
+	categories: ["NoSQL","Query Language"],
+	authors: [1] //This one written by Noyan itself
+}
