@@ -259,3 +259,23 @@ Article Document:
 	categories: ["NoSQL","Query Language"],
 	authors: [1] //This one written by Noyan itself
 }
+
+#MongoDB USER/ROLE MANAGEMENT #
+* In this part we are going to learn about user and role management in mongoDB
+
+* To define the user for the database we should change our database using
+use database command
+
+* db.getUsers() command list all the users defined for that database
+
+* db.createUser({user:"Noyan", pwd:"501100", roles: [{role:"userAdmin", db:"camper_marketplace"}])
+
+* To start mongo server Authentication enabled, we can used
+mongod --auth --dbpath d:/mongodb/data/db
+
+* When we try to connect mongo without authorization username/password mongo will return us "not authorized on admin to execute command error"
+. For authorization we can use
+
+db.auth("Noyan", "password")
+
+
